@@ -156,7 +156,7 @@ export interface W<T> {
     },
     {
       code: noFormat`interface A extends B, C { x: number; };`,
-      output: `type A = { x: number; } & B & C;`,
+      output: `type A = B & C & { x: number; };`,
       options: ['type'],
       errors: [
         {
@@ -168,7 +168,7 @@ export interface W<T> {
     },
     {
       code: noFormat`interface A extends B<T1>, C<T2> { x: number; };`,
-      output: `type A = { x: number; } & B<T1> & C<T2>;`,
+      output: `type A = B<T1> & C<T2> & { x: number; };`,
       options: ['type'],
       errors: [
         {

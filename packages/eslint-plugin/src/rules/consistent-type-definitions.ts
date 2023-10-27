@@ -100,11 +100,27 @@ export default createRule({
                 }
 
                 if (node.extends) {
-                  node.extends.forEach(heritage => {
+                  node.extends.forEach((heritage, index) => {
                     const typeIdentifier = sourceCode.getText(heritage);
-                    fixes.push(
-                      fixer.insertTextAfter(node.body, ` & ${typeIdentifier}`),
-                    );
+                    if (index === 0) {
+                      fixes.push(
+                        fixer.insertTextBefore(node.body, `${typeIdentifier}`),
+                      );
+                    } else if (index === node.extends.length - 1) {
+                      fixes.push(
+                        fixer.insertTextBefore(
+                          node.body,
+                          ` & ${typeIdentifier} & `,
+                        ),
+                      );
+                    } else {
+                      fixes.push(
+                        fixer.insertTextBefore(
+                          node.body,
+                          ` & ${typeIdentifier}`,
+                        ),
+                      );
+                    }
                   });
                 }
 
